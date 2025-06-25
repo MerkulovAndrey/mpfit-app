@@ -27,15 +27,33 @@
                     <div class="grid grid-cols-1 md:grid-cols-2">
                         <!-- карточка товара -->
                          @if (!empty($model))
-                            {{ $model->id }}
-                            {{ $model->name }}
-                            {{ $model->category_id }}
-                            {{ $model->description }}
-                            {{ $model->price }}
+                            <table>
+                                <thead>
+                                    <th>Код товара</th>
+                                    <th>Наименование</th>
+                                    <th>Описание</th>
+                                    <th>Категория</th>
+                                    <th>Цена</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ $model->id }}</td>
+                                        <td>{{ $model->name }}</td>
+                                        <td>{{ $model->description }}</td>
+                                        <td>
+                                            @foreach($categories as $item)
+                                                @if ($item->id == $model->category_id)
+                                                    {{ $item->name }}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $model->price }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         @else
                             <p>Товар не найден</p>
                         @endif
-                            
                     </div>
                 </div>
             </div>

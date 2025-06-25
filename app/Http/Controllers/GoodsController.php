@@ -66,7 +66,10 @@ class GoodsController extends Controller
      */
     public function show($id)
     {
-        return view('goodsItem', ['model' => Goods::find($id)]);
+        return view('goodsItem', [
+            'model' => Goods::find($id),
+            'categories' => SELF::$categories
+        ]);
     }
 
     /**

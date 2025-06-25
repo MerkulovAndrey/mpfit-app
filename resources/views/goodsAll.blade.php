@@ -36,7 +36,6 @@
                         <thead>
                             <th>Код товара</th>
                             <th>Наименование</th>
-                            <th>Описание</th>
                             <th>Категория</th>
                             <th>Цена</th>
                         </thead>
@@ -45,7 +44,6 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->description }}</td>
                                     <td>{{ $item->category_id }}</td>
                                     <td>{{ $item->price }}</td>
                                 </tr>
