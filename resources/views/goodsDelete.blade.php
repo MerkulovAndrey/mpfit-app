@@ -17,25 +17,28 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <table>
-                        <caption>Список товаров</caption>
-                        <thead>
-                            <th>Код товара</th>
-                            <th>Наименование</th>
-                            <th>Категория</th>
-                            <th>Цена</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                        </thead>
-                        <tfoot><tr><td colspan="7">
-                            <a href="goods/create"><div class="btn primary" style="text-align: center;">Новый товар</div></a>
-                        </td></tr></tfoot>
-                        <tbody>
-                            @foreach($goods as $model)
+                    @if (!empty($model))
+                        <table>
+                            <caption>Удаление товара</caption>
+                            <thead>
+                                <th>Код товара</th>
+                                <th>Наименование</th>
+                                <th>Описание</th>
+                                <th>Категория</th>
+                                <th>Цена</th>
+                            </thead>
+                            <tfoot><tr><td colspan="7">
+                                <form action="/goods/{{ $model->id }}" method="POST">@method('DELETE')
+                                    <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                                    <input type="submit" class="btn danger" value="Удалить">
+                                    <a href="javascript:history.back()"><input type="button" class="btn info" value="Отменить"></a>
+                                </form>
+                            </td></tr></tfoot>
+                            <tbody>
                                 <tr>
                                     <td>{{ $model->id }}</td>
                                     <td>{{ $model->name }}</td>
+                                    <td>{{ $model->description }}</td>
                                     <td>
                                         @foreach($categories as $item)
                                             @if ($item->id == $model->category_id)
@@ -44,15 +47,13 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $model->price }}</td>
-                                    <td><div class="btn success"><a href="goods/{{ $model->id }}">Подробнее</a></div></td>
-                                    <td><div class="btn primary"><a href="goods/{{ $model->id }}/edit">Редактирование</a></div></td>
-                                    <td><div class="btn danger"><a href="goods/{{ $model->id }}/delete">Удалить</a></div></td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    @else
+                        <p>Товар не найден</p>
+                    @endif
                 </div>
-
             </div>
         </div>
     </body>

@@ -22,3 +22,5 @@ Route::get('/', function () {
 Route::resources([
     'goods' => GoodsController::class
 ]);
+
+Route::get('/goods/{id}/delete', [GoodsController::class, 'delete']);

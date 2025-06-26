@@ -20,17 +20,20 @@ class GoodsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
-        return view('goodsAll', ['goods' => Goods::all()]);
+        return view('goodsAll', [
+            'goods' => Goods::all(),
+            'categories' => SELF::$categories
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -62,7 +65,7 @@ class GoodsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
     {
@@ -76,7 +79,7 @@ class GoodsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
@@ -121,6 +124,22 @@ class GoodsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = Goods::find($id);
+        $model->delete($id);
+        return redirect()->route('goods.index')->with('success', 'Товар удалён');  
+    }
+
+    /**
+     * Show the confirmation form for deleting the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        return view('goodsDelete', [
+            'model' => Goods::find($id),
+            'categories' => SELF::$categories
+        ]);
     }
 }
