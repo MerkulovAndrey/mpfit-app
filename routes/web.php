@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoodsController;
-use App\Http\Controllers\CatsController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,10 @@ Route::get('/', function () {
 });
 
 Route::resources([
-    'goods' => GoodsController::class
+    'order' => OrderController::class
 ]);
 
+Route::resources([
+    'goods' => GoodsController::class
+]);
 Route::get('/goods/{id}/delete', [GoodsController::class, 'delete']);

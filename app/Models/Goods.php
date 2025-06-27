@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Goods extends Model
 {
@@ -17,5 +18,31 @@ class Goods extends Model
         'description',
         'price'
     ];
+
+    // Список товаров в категориях
+    public static function getCatalog()
+    {
+        // ** как получить товары с разбивкой по категориям для списка в форме
+        $sql = <<<'EOT'
+            SELECT c.name AS category, JSON_ARRAYAGG(JSON_OBJECT('id', g.id, 'name', g.name)) AS goods
+            FROM goods g 
+            JOIN categories c ON c.id = g.category_id
+            GROUP BY c.name
+        EOT;
+        $rows = DB::select($sql);
+        $res = array();
+
+        foreach($rows as $item) {
+
+            $goods = json_decode($item->goods, true);
+
+            array_push($res, [
+                'category' => $item->category,
+                'goods' => $goods
+            ]);
+        }
+
+        return $res;
+    }
 
 }

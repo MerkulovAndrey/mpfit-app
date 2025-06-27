@@ -37,7 +37,6 @@ class GoodsController extends Controller
      */
     public function create()
     {
-        $categories = Categories::all(['*']);
         return view('goodsForm', [
             'categories' => SELF::$categories
         ]);
