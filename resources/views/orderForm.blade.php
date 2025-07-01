@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Товары</title>
+        <title>Заказы</title>
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -30,22 +30,21 @@
                             <br/>
 
                             <label for="comment">Комментарий клиента</label>
-                            <input id="comment" name="client_comment" type="text" class="@error('comment') is-invalid @enderror">
-                            @error('comment')
-                                <div class="alert alert-danger">Неправильное значение</div>
-                            @enderror
+                            <input id="comment" name="client_comment" type="text">
                             <br/>
 
-                            <label for="goods">Выбрать товар</label>
-                            <select id="goods" name="goods_id" type="number">
-                                <option value="" selected>&nbsp;</option>
+                            <label for="goods">Выбрать несколько товаров</label>
+                            <select multiple size=5 id="goods" name="goods[]" type="number" class="@error('goods') is-invalid @enderror">
                                 @foreach($catalog as $item)
                                     <option value="" disabled>====== {{ $item['category'] }} ======</option>
                                     @foreach($item['goods'] as $gItem)
-                                    <option value="{{ $gItem['id'] }}" >{{ $gItem['name'] }}</option>
+                                        <option value={{ $gItem['id'] }}>{{ $gItem['name'] }}</option>
                                     @endforeach
                                 @endforeach
                             </select>
+                            @error('goods')
+                                <div class="alert alert-danger">Нужно выбрать товар</div>
+                            @enderror
                             <br/>
 
                             <input type="submit" class="btn success" value="Создать">

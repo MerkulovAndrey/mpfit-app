@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Goods;
+use Exception;
 
 class OrderController extends Controller
 {
@@ -23,7 +24,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('orderAll', [
+            'orders' => Order::all()
+        ]);
     }
 
     /**
@@ -46,7 +49,21 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res = 'success';
+        $message = 'Заказ добавлен';
+
+        $request->validate([  
+            'client_name' => 'required',  
+        ]);
+
+        try {
+            $order = Order::create($request->post());
+            $order->createOrderGoodsLink($request->input()['goods']);
+        } catch (Exception $e) {
+            $res = 'fail';
+            $message = 'Ошибка создания заказа: '.$e->getMessage();
+        }
+        return redirect()->route('order.index')->with($res, $message);  
     }
 
     /**
