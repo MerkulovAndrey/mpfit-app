@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Goods;
 use Exception;
 
+enum Status: string {
+    case New = 'новый';
+    case Done = 'выполнен';
+}
+
 class OrderController extends Controller
 {
 
     private static $catalog;
+
 
     public function __construct()
     {
@@ -25,7 +32,7 @@ class OrderController extends Controller
     public function index()
     {
         return view('orderAll', [
-            'orders' => Order::all()
+            'orders' => Order::showAll()
         ]);
     }
 
@@ -74,7 +81,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('orderItem', [
+            'model' => Order::showFullOrderInfo($id)
+        ]);
     }
 
     /**
@@ -97,7 +106,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([  
+            'status' => ['required', Rule::in(['выполнен'])],  
+        ]);
+
+        $params = $request->input();
+
+        $model = Order::find($id);
+        $model->status = $params['status'];
+
+        $model->save();
+        return redirect()->route('order.index')->with('success', "Статус заказа заменён на 'выполнен'");
     }
 
     /**

@@ -37,8 +37,8 @@
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->client_name }}</td>
                                     <td>{{ $order->status }}</td>
-                                    <td>{{ $order->total }}</td>
-                                    <td><div class="btn success"><a href="goods/{{ $order->id }}">Подробнее</a></div></td>
+                                    <td>{{ $order->full_price }}</td>
+                                    <td><div class="btn success"><a href="order/{{ $order->id }}">Подробнее</a></div></td>
                                 </tr>
                             @endforeach
                         </tbody>
