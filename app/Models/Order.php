@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Error;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -19,23 +19,32 @@ class Order extends Model
         'client_comment'
     ];
 
-
-    // Привязка товаров к заказу
-    public function createOrderGoodsLink($goodsIdList)
+    // Создание заказа
+    public static function createOrder(Request $request)
     {
+        $goodsIdList = $request->input()['goods'];
         if (count($goodsIdList) > 0) {
-            foreach($goodsIdList as $id) {
-                if (!DB::table('lnk_orders_goods')->insert([
-                    'goods_id' => (int)$id,
-                    'orders_id' => (int)$this->attributes['id']
-                ])) {
-                    throw new Exception("Ошибка привязки товара $id к заказу $this->id");
+
+            $params = [
+                'request' => $request,
+                'idList' => $goodsIdList
+            ];
+
+            DB::transaction(function() use ($request, $goodsIdList) {
+                // создание заказа
+                $order = SELF::create($request->post());
+
+                // Привязка товаров к заказу
+                foreach($goodsIdList as $id) {
+                    DB::table('lnk_orders_goods')->insert([
+                        'goods_id' => (int)$id,
+                        'orders_id' => (int)$order->attributes['id']
+                    ]); 
                 }
-            }
+            });
         } else {
             throw new Exception('Пустой список кодов товаров');
         }
-
     }
 
     // Информация о заказе

@@ -8,11 +8,6 @@ use App\Models\Order;
 use App\Models\Goods;
 use Exception;
 
-enum Status: string {
-    case New = 'новый';
-    case Done = 'выполнен';
-}
-
 class OrderController extends Controller
 {
 
@@ -64,8 +59,7 @@ class OrderController extends Controller
         ]);
 
         try {
-            $order = Order::create($request->post());
-            $order->createOrderGoodsLink($request->input()['goods']);
+            Order::createOrder($request);
         } catch (Exception $e) {
             $res = 'fail';
             $message = 'Ошибка создания заказа: '.$e->getMessage();
