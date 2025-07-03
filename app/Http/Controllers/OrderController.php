@@ -53,9 +53,10 @@ class OrderController extends Controller
     {
         $res = 'success';
         $message = 'Заказ добавлен';
-
+        
         $request->validate([  
             'client_name' => 'required',  
+            'goods' => 'required'
         ]);
 
         try {

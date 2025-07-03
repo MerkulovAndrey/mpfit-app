@@ -22,9 +22,9 @@
                         <h1>Новый заказ</h1>
                         <form action="/order" method="POST">
                             <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                            <label for="name">ФИО клиента</label>
-                            <input id="name" name="client_name" type="text" class="@error('name') is-invalid @enderror">
-                            @error('name')
+                            <label for="client_name">ФИО клиента</label>
+                            <input id="client_name" name="client_name" type="text" class="@error('client_name') is-invalid @enderror">
+                            @error('client_name')
                                 <div class="alert alert-danger">Неправильное значение</div>
                             @enderror
                             <br/>
