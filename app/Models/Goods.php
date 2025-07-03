@@ -16,17 +16,18 @@ class Goods extends Model
         'name',
         'category_id',
         'description',
-        'price'
+        'price',
+        'deleted'
     ];
 
     // Список товаров в категориях
     public static function getCatalog()
     {
-        // ** как получить товары с разбивкой по категориям для списка в форме
         $sql = <<<'EOT'
             SELECT c.name AS category, JSON_ARRAYAGG(JSON_OBJECT('id', g.id, 'name', g.name)) AS goods
             FROM goods g 
             JOIN categories c ON c.id = g.category_id
+            WHERE g.deleted = 0
             GROUP BY c.name
         EOT;
         $rows = DB::select($sql);

@@ -36,7 +36,10 @@
                         </td></tr></tfoot>
                         <tbody>
                             @foreach($goods as $model)
-                                <tr>
+                                <tr @if ($model->deleted == 1)
+                                        style="text-decoration: line-through;"
+                                    @endif
+                                >
                                     <td>{{ $model->id }}</td>
                                     <td>{{ $model->name }}</td>
                                     <td>
@@ -47,9 +50,15 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $model->price }}</td>
-                                    <td><div class="btn success"><a href="goods/{{ $model->id }}">Подробнее</a></div></td>
-                                    <td><div class="btn primary"><a href="goods/{{ $model->id }}/edit">Редактирование</a></div></td>
-                                    <td><div class="btn danger"><a href="goods/{{ $model->id }}/delete">Удалить</a></div></td>
+                                    @if ($model->deleted == 0)
+                                        <td><div class="btn success"><a href="goods/{{ $model->id }}">Подробнее</a></div></td>
+                                        <td><div class="btn primary"><a href="goods/{{ $model->id }}/edit">Редактирование</a></div></td>
+                                        <td><div class="btn danger"><a href="goods/{{ $model->id }}/delete">Удалить</a></div></td>
+                                    @else
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

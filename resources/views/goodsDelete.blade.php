@@ -28,8 +28,9 @@
                                 <th>Цена</th>
                             </thead>
                             <tfoot><tr><td colspan="7">
-                                <form action="/goods/{{ $model->id }}" method="POST">@method('DELETE')
+                                <form action="/goods/{{ $model->id }}" method="POST">@method('PUT')
                                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="deleted" id="deleted" value="1">
                                     <input type="submit" class="btn danger" value="Удалить">
                                     <a href="javascript:history.back()"><input type="button" class="btn info" value="Отменить"></a>
                                 </form>

@@ -97,20 +97,23 @@ class GoodsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([  
-            'name' => 'required',  
-            'price' => 'required',  
-            'category_id' => 'required',  
-        ]);
-
         $params = $request->input();
-
         $model = Goods::find($id);
-        $model->name = $params['name'];
-        $model->description = $params['description'];
-        $model->category_id = $params['category_id'];
-        $model->price = $params['price'];
 
+        if (isset($params['deleted'])) {
+            $model->deleted = $params['deleted'];
+        } else {
+            $request->validate([  
+                'name' => 'required',  
+                'price' => 'required',  
+                'category_id' => 'required',  
+            ]);
+
+            $model->name = $params['name'];
+            $model->description = $params['description'];
+            $model->category_id = $params['category_id'];
+            $model->price = $params['price'];
+        }
         $model->save();
         return redirect()->route('goods.index')->with('success', 'Товар изменён');  
     }
