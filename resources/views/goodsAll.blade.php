@@ -16,6 +16,9 @@
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                <div class="topper mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+                    <a href="/">В начало</a>&nbsp;&nbsp;&nbsp;Товары&nbsp;&nbsp;&nbsp;<a href="/order">Заказы</a>
+                </div>
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <table>
                         <caption>Список товаров</caption>

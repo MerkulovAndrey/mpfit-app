@@ -6,3 +6,4 @@ th, td {border: #cccccc solid 1px; margin-left: 10px; padding: 10px;}
 .btn.info { background-color: #607d8b; }
 .btn.warning { background-color: #ff9700; }
 .btn.danger { background-color: #f44236; }
+.topper {text-align: center; color: #aaaaaa; }
