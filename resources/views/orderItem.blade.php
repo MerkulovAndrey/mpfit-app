@@ -40,16 +40,26 @@
                                     <td>{{ $model->client_comment }}</td>
                                     <td>
                                         @if (isset($model->goods[0]))
-                                            <ol>
                                                 @foreach($model->goods as $item)
-                                                    <li>{{ $item }}
+                                                    {{ $item }}<br/>
                                                 @endforeach
-                                            </ol>
                                         @else
                                             нет
                                         @endif
+                                        <div style="border-bottom: solid 1px #000000;">&nbsp;</div>
+                                        Итого:
                                     </td>
-                                    <td>{{ $model->full_price }}</td>
+                                    <td style="text-align: right;">                                        
+                                        @if (isset($model->prices[0]))
+                                                @foreach($model->prices as $item)
+                                                    {{ $item }}<br/>
+                                                @endforeach
+                                        @else
+                                            0
+                                        @endif
+                                        <div style="border-bottom: solid 1px #000000;">&nbsp;</div>
+                                        {{ $model->full_price }}
+                                    </td>
                                     <td>
                                         {{ $model->status }}
                                         @if ($model->status == 'новый')

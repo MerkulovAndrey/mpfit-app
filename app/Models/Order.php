@@ -53,6 +53,7 @@ class Order extends Model
         $sql = <<<'EOT'
             SELECT o.id, o.status, o.created_at, o.client_name, o.client_comment
                 ,JSON_ARRAYAGG(g.name) AS goods
+                ,JSON_ARRAYAGG(CAST(g.price AS CHAR)) AS prices
                 ,COALESCE(SUM(g.price), 0) AS full_price
             FROM orders o 
             LEFT JOIN lnk_orders_goods log2 ON log2.orders_id = o.id
@@ -63,9 +64,11 @@ class Order extends Model
         
         $row = DB::selectOne($sql, [$orderId]);
         if (!isset($row->goods)) {
-            $row->goods = array();
+            $row->goods = [];
+            $row->prices = [];
         } else {
             $row->goods = json_decode($row->goods);
+            $row->prices = json_decode($row->prices);
         }
         return $row;
     }
