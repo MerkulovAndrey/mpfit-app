@@ -14,7 +14,7 @@ return new class extends Migration
     {
         $sql = <<<'EOT'
             CREATE TABLE IF NOT EXISTS categories (
-                id INT UNSIGNED NOT NULL COMMENT 'Код категории товара',
+                id INT UNSIGNED auto_increment NOT NULL COMMENT 'Код категории товара',
                 name varchar(100) NOT NULL COMMENT 'Название категории',
                 CONSTRAINT categories_pk PRIMARY KEY (id)
             )
@@ -44,7 +44,7 @@ return new class extends Migration
                 
         $sql = <<<'EOT'
             CREATE TABLE IF NOT EXISTS orders (
-                id INT UNSIGNED NOT NULL COMMENT 'Код заказа',
+                id INT UNSIGNED auto_increment NOT NULL COMMENT 'Код заказа',
                 status ENUM('новый','выполнен') DEFAULT 'новый' NOT NULL COMMENT 'Статус заказа',
                 created_at DATETIME DEFAULT now() NOT NULL COMMENT 'Время создания заказа',
                 client_name varchar(100) NOT NULL COMMENT 'ФИО покупателя',
