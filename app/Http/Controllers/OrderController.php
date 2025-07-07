@@ -47,7 +47,7 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -72,7 +72,7 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return $view is null ? \Illuminate\Contracts\View\Factory : \Illuminate\Contracts\View\View
      */
     public function show($id)
     {
@@ -97,7 +97,8 @@ class OrderController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return $view is null ? \Illuminate\Contracts\View\Factory : \Illuminate\Contracts\View\View
+
      */
     public function update(Request $request, $id)
     {

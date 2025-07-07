@@ -20,8 +20,12 @@ class Goods extends Model
         'deleted'
     ];
 
-    // Список товаров в категориях
-    public static function getCatalog()
+    /**
+     * Список товаров в категориях
+     *
+     * @return array $res
+     */
+    public static function getCatalog(): array
     {
         $sql = <<<'EOT'
             SELECT c.name AS category, JSON_ARRAYAGG(JSON_OBJECT('id', g.id, 'name', g.name)) AS goods

@@ -20,6 +20,12 @@ class Order extends Model
     ];
 
     // Создание заказа
+    /**
+     * Создание заказа
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @throws \Exception
+     */
     public static function createOrder(Request $request)
     {
         $goodsIdList = $request->input()['goods'];
@@ -47,7 +53,12 @@ class Order extends Model
         }
     }
 
-    // Информация о заказе
+    /**
+     * Информация о заказе
+     *
+     * @param  int  $orderId
+     * @return mixed $row
+     */
     public static function showFullOrderInfo($orderId)
     {
         $sql = <<<'EOT'
@@ -73,8 +84,12 @@ class Order extends Model
         return $row;
     }
 
-    // Список всех заказов
-    public static function showAll()
+    /**
+     * Список всех заказов
+     *
+     * @return array
+     */
+    public static function showAll(): array
     {
         $sql = <<<'EOT'
             SELECT o.id, o.status, o.created_at, o.client_name, o.client_comment
