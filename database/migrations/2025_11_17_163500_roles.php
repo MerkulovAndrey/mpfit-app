@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         $sql = <<<'EOT'
-            CREATE TABLE laravel.users_roles (
+            CREATE TABLE users_roles (
                 id INT UNSIGNED auto_increment NOT NULL COMMENT 'Код роли',
                 name varchar(64) NOT NULL COMMENT 'Cистемное имя роли',
                 name_display varchar(255) NOT NULL COMMENT 'Имя роли для отображения в UI',
@@ -29,7 +29,7 @@ return new class extends Migration
         DB::statement($sql, []);
 
         $sql = <<<'EOT'
-            CREATE TABLE laravel.users_permissions (
+            CREATE TABLE users_permissions (
                 id INT UNSIGNED auto_increment NOT NULL COMMENT 'Код права',
                 name varchar(64) NOT NULL COMMENT 'Cистемное имя права',
                 name_display varchar(255) NOT NULL COMMENT 'Имя права для отображения в UI',
@@ -45,11 +45,11 @@ return new class extends Migration
         DB::statement($sql, []);
 
         $sql = <<<'EOT'
-            CREATE TABLE laravel.users_permissions_roles_link (
+            CREATE TABLE users_permissions_roles_link (
                 role_id INT UNSIGNED NOT NULL,
                 permission_id INT UNSIGNED NOT NULL,
-                CONSTRAINT users_permissions_roles_link_users_roles_FK FOREIGN KEY (role_id) REFERENCES laravel.users_roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
-                CONSTRAINT users_permissions_roles_link_users_permissions_FK FOREIGN KEY (permission_id) REFERENCES laravel.users_permissions(id) ON DELETE CASCADE ON UPDATE CASCADE
+                CONSTRAINT users_permissions_roles_link_users_roles_FK FOREIGN KEY (role_id) REFERENCES users_roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                CONSTRAINT users_permissions_roles_link_users_permissions_FK FOREIGN KEY (permission_id) REFERENCES users_permissions(id) ON DELETE CASCADE ON UPDATE CASCADE
             )
             ENGINE=InnoDB
             DEFAULT CHARSET=utf8mb4
@@ -59,7 +59,7 @@ return new class extends Migration
         DB::statement($sql, []);
 
         $sql = <<<'EOT'
-            INSERT INTO laravel.users_roles (name, name_display, description)
+            INSERT INTO users_roles (name, name_display, description)
             VALUES
                 ('norole', 'Нет роли', 'Роль без прав (по умолчанию)'),
                 ('admin', 'Администратор', 'Все права'),
@@ -68,8 +68,8 @@ return new class extends Migration
         EOT;
         DB::statement($sql, []);
 
-        DB::statement("ALTER TABLE laravel.users ADD role_id INT UNSIGNED DEFAULT 1 NOT NULL COMMENT 'Код роли'", []);
-        DB::statement("ALTER TABLE laravel.users ADD CONSTRAINT users_users_roles_FK FOREIGN KEY (role_id) REFERENCES laravel.users_roles(id) ON DELETE RESTRICT ON UPDATE CASCADE;", []);
+        DB::statement("ALTER TABLE users ADD role_id INT UNSIGNED DEFAULT 1 NOT NULL COMMENT 'Код роли'", []);
+        DB::statement("ALTER TABLE users ADD CONSTRAINT users_users_roles_FK FOREIGN KEY (role_id) REFERENCES users_roles(id) ON DELETE RESTRICT ON UPDATE CASCADE;", []);
 
     }
 
@@ -78,7 +78,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement("ALTER TABLE laravel.users DROP COLUMN role_id", []);
+        DB::statement("ALTER TABLE users DROP FOREIGN KEY users_users_roles_FK");
+        DB::statement("ALTER TABLE users DROP COLUMN role_id", []);
         Schema::dropIfExists('users_permissions_roles_link');
         Schema::dropIfExists('users_roles');
         Schema::dropIfExists('users_permissions');

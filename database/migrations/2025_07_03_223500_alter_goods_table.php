@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         $sql = <<<'EOT'
-            ALTER TABLE laravel.goods ADD deleted BOOL DEFAULT false NOT NULL COMMENT 'Признак удаления товара';
+            ALTER TABLE goods ADD deleted BOOL DEFAULT false NOT NULL COMMENT 'Признак удаления товара';
         EOT;
         DB::statement($sql, []);
     }
@@ -26,7 +26,7 @@ return new class extends Migration
         DB::statement("DROP TABLE IF EXISTS lnk_orders_goods", []);
 
         $sql = <<<'EOT'
-            ALTER TABLE laravel.goods DROP COLUMN deleted;
+            ALTER TABLE goods DROP COLUMN deleted;
         EOT;
         DB::statement($sql, []);
     }

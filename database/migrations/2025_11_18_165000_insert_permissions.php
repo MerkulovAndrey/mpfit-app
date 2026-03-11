@@ -13,13 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         $sql = <<<'EOT'
-            INSERT INTO laravel.users_permissions (name,name_display,description)
-                VALUES ('cats.create','Создание категорий','Создание категорий');
-            INSERT INTO laravel.users_permissions (name,name_display,description)
-                VALUES ('cats.update','Редактирование категорий','Редактирование категорий');
-            INSERT INTO laravel.users_permissions (name,name_display,description)
-                VALUES ('cats.delete','Удаление категорий','Удаление категорий');
-
+            INSERT INTO users_permissions (name,name_display,description)
+            VALUES 
+                ('cats.create','Создание категорий','Создание категорий'),
+                ('cats.update','Редактирование категорий','Редактирование категорий'),
+                ('cats.delete','Удаление категорий','Удаление категорий');
         EOT;
         DB::statement($sql, []);
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement("TRUNCATE TABLE laravel.users_permissions", []);
+        DB::statement("TRUNCATE TABLE users_permissions", []);
     }
 };
