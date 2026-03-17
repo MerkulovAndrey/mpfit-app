@@ -10,6 +10,23 @@
 Тестовое задание PHP + Laravel9 + Mysql (Фронтэнд не оценивался)
 Ведение товаров в категориях, формирование заказов.
 
+Сборка
+Выполнить: ./var/www/html/build
+Для удобства в контейнер Apache установлен MC.
+
+Установка Laravel 9.52.21:
+1)  Перейти в терминал контейнера Apache2
+2)  Выполнить: cp /var/www/html/docker/laravel9/000-default.conf /etc/apache2/sites-enabled/000-default.conf
+3)  Перезапустить контейнер Apache2
+4)  Снова перейти в терминал контейнера Apache2
+5)  Выполнить su - user
+6)  Выполнить: /var/www/html/docker/laravel9/install
+7)  Выполнить: composer install
+8)  Перелогинитьcя пользователем user
+9)  Скопировать .env.example в .env
+10) Выполнить: ./artisan migrate
+11) Выполнить: npm run dev
+
 Функционал приложения:
 
 1 Управление товарами:
