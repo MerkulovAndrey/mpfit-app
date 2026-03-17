@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# uncomment if docker intalled
+#UID=$(id -u) GID=$(id -g) docker-compose up --build
+
+# uncomment if docker desktop installed
+UID=$(id -u) GID=$(id -g) docker compose up
+
